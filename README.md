@@ -7,7 +7,7 @@ One-page landing site for the **Fractional Closer** offer (Google Ads test). Pla
 
 ## Hosting
 
-GitHub Pages from `main` (root). The custom domain is set by the `CNAME` file; DNS records live at the registrar:
+GitHub Pages via GitHub Actions: every push to `main` runs `.github/workflows/deploy.yml`, which runs sanity checks and then publishes. A failed check blocks the deploy. The custom domain is `fractionalcloser.eu` (Pages settings + `CNAME`); DNS records live at Namecheap:
 - `A @` → 185.199.108.153 · 185.199.109.153 · 185.199.110.153 · 185.199.111.153
 - `CNAME www` → gabegiro.github.io
 

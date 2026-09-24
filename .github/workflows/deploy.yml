@@ -1,0 +1,57 @@
+# Publishes the site to GitHub Pages (fractionalcloser.eu) on every push to main.
+# Deploys only if the sanity checks pass, so a broken page never goes live.
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sanity checks
+        run: |
+          set -e
+          test -s index.html && test -s privacy.html
+          grep -q 'fractionalcloser.eu' CNAME
+          grep -q 'calendly.com/gabegiro/fractional-closer' index.html || { echo "Booking link missing"; exit 1; }
+          grep -q "gtag('config', 'AW-" index.html || { echo "Google Ads tag missing"; exit 1; }
+          grep -q "gtag('consent', 'default'" index.html || { echo "Consent default missing"; exit 1; }
+          ! grep -qi 'most chosen\|lorem ipsum\|TODO' index.html || { echo "Placeholder or unverifiable claim found"; exit 1; }
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          for f in ("index.html", "privacy.html"):
+              HTMLParser().feed(open(f, encoding="utf-8").read())
+          print("HTML parses")
+          PY
+
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Collect site files
+        run: |
+          mkdir _site
+          cp index.html privacy.html CNAME _site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
