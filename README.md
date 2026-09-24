@@ -5,9 +5,12 @@ One-page landing site for the **Fractional Closer** offer (Google Ads test). Pla
 - `index.html` - the page. Prices, copy and the Calendly link live here.
 - `privacy.html` - required once Google Ads conversion tracking is on.
 
-## Go live (once)
-1. Buy `fractionalcloser.eu` (it was available on 2026-09-24).
-2. Host the two files anywhere static. The simplest option is Netlify Drop or Cloudflare Pages: drag the folder in, attach the domain, and HTTPS is automatic.
-3. In Google Ads, create a conversion ("Book call click"), paste the gtag snippet where the `GOOGLE ADS TAG` comment is, and set `ADS_SEND_TO` at the bottom of `index.html`.
+## Hosting
 
-Ads plan and sales kit (vault): `projects/reinvention/closer/`.
+GitHub Pages from `main` (root). The custom domain is set by the `CNAME` file; DNS records live at the registrar:
+- `A @` → 185.199.108.153 · 185.199.109.153 · 185.199.110.153 · 185.199.111.153
+- `CNAME www` → gabegiro.github.io
+
+## Ads tracking
+ In Google Ads, create a conversion ("Book call click"), paste the gtag snippet where the `GOOGLE ADS TAG` comment is, and set `ADS_SEND_TO` at the bottom of `index.html`.
+
