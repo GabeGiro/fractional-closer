@@ -29,6 +29,8 @@ jobs:
           grep -q 'calendly.com/gabegiro/fractional-closer' index.html || { echo "Booking link missing"; exit 1; }
           grep -q "gtag('config', 'AW-" index.html || { echo "Google Ads tag missing"; exit 1; }
           grep -q "gtag('consent', 'default'" index.html || { echo "Consent default missing"; exit 1; }
+          grep -q 'ADS_SEND_TO = "AW-' index.html || { echo "Conversion send_to missing"; exit 1; }
+          test -s gabe.jpg || { echo "Headshot missing"; exit 1; }
           ! grep -qi 'most chosen\|lorem ipsum\|TODO' index.html || { echo "Placeholder or unverifiable claim found"; exit 1; }
           python3 - <<'PY'
           from html.parser import HTMLParser
@@ -49,7 +51,7 @@ jobs:
       - name: Collect site files
         run: |
           mkdir _site
-          cp index.html privacy.html CNAME _site/
+          cp index.html privacy.html CNAME gabe.jpg _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
