@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Booked - Fractional Closer</title>
+<meta name="robots" content="noindex">
+<!-- Consent Mode v2: same defaults as index.html -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied' });
+  try { if (localStorage.getItem('fc-consent') === 'granted') gtag('consent', 'update', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'denied', analytics_storage: 'denied' }); } catch (e) {}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-979659038"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'AW-979659038');
+</script>
+<style>
+  :root { --ink:#111; --muted:#555; --line:#e3e3e3; --accent:#0b5d3b; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:#fff; line-height:1.6; font-size:17px; }
+  .wrap { max-width:640px; margin:0 auto; padding:64px 20px; text-align:center; }
+  .headshot { width:96px; height:96px; border-radius:50%; object-fit:cover; border:1px solid var(--line); }
+  h1 { font-size:32px; margin:20px 0 8px; }
+  p { color:var(--muted); margin:0 0 14px; }
+  ul { text-align:left; display:inline-block; margin:8px 0 24px; padding-left:20px; color:var(--muted); }
+  a { color:var(--accent); }
+  .back { font-size:15px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img class="headshot" src="gabe.jpg" alt="Gabe Giro">
+  <h1>You're booked. Thank you!</h1>
+  <p>The calendar invite with the call link is in your inbox.</p>
+  <p>Before we talk, I'll look at your website, so the 15 minutes go to your leads, not to introductions. If it helps, have these numbers roughly in mind:</p>
+  <ul>
+    <li>leads or booked calls you get per month</li>
+    <li>your average deal size</li>
+    <li>where deals usually stall</li>
+  </ul>
+  <p>Need to change the time? Use the link in the invite, or email <a href="mailto:info@gabegiro.com">info@gabegiro.com</a>.</p>
+  <p>Talk soon,<br>Gabe</p>
+  <p class="back"><a href="index.html">← Back to Fractional Closer</a></p>
+</div>
+<script>
+  // Counts a completed Calendly booking as a Google Ads conversion.
+  // Set this to the "Booked call" conversion's "AW-XXXXXXXXX/label" value; empty = nothing fires.
+  var BOOKED_SEND_TO = "";
+  (function () {
+    var seen = false;
+    try { seen = sessionStorage.getItem("fc-booked") === "1"; sessionStorage.setItem("fc-booked", "1"); } catch (e) {}
+    // Refreshing the page must not count a second booking.
+    if (!seen && BOOKED_SEND_TO && typeof gtag === "function") gtag("event", "conversion", { send_to: BOOKED_SEND_TO });
+  })();
+</script>
+</body>
+</html>
