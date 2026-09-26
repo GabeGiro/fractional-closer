@@ -31,6 +31,7 @@ jobs:
           grep -q "gtag('consent', 'default'" index.html || { echo "Consent default missing"; exit 1; }
           grep -q 'ADS_SEND_TO = "AW-' index.html || { echo "Conversion send_to missing"; exit 1; }
           grep -q 'BOOKED_SEND_TO = "AW-' thanks.html || { echo "Booked-call send_to missing"; exit 1; }
+          ! grep -q "@" thanks.html || { echo "No email addresses on thanks.html (Google auto enhanced conversions would scrape it)"; exit 1; }
           test -s gabe.jpg || { echo "Headshot missing"; exit 1; }
           ! grep -qi 'most chosen\|lorem ipsum\|TODO' index.html || { echo "Placeholder or unverifiable claim found"; exit 1; }
           python3 - <<'PY'
