@@ -47,8 +47,8 @@
 </div>
 <script>
   // Counts a completed Calendly booking as a Google Ads conversion.
-  // Set this to the "Booked call" conversion's "AW-XXXXXXXXX/label" value; empty = nothing fires.
-  var BOOKED_SEND_TO = "";
+  // Empty = nothing fires.
+  var BOOKED_SEND_TO = "AW-979659038/C70WCOKLjoUdEJ7SkdMD"; // "Booked call" conversion
   (function () {
     var seen = false;
     try { seen = sessionStorage.getItem("fc-booked") === "1"; sessionStorage.setItem("fc-booked", "1"); } catch (e) {}
