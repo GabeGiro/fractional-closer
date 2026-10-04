@@ -10,13 +10,14 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied' });
-  try { if (localStorage.getItem('fc-consent') === 'granted') gtag('consent', 'update', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'denied', analytics_storage: 'denied' }); } catch (e) {}
+  try { if (localStorage.getItem('fc-consent') === 'granted') gtag('consent', 'update', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'denied', analytics_storage: 'granted' }); } catch (e) {}
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-979659038"></script>
 <script>
   gtag('js', new Date());
   gtag('config', 'AW-979659038');
 </script>
+<script src="tags.js"></script>
 <style>
   :root { --ink:#111; --muted:#555; --line:#e3e3e3; --accent:#0b5d3b; }
   * { box-sizing:border-box; }
@@ -45,6 +46,7 @@
   <p>Talk soon,<br>Gabe</p>
   <p class="back"><a href="index.html">← Back to Fractional Closer</a></p>
 </div>
+<script src="source-capture.js"></script>
 <script>
   // Counts a completed Calendly booking as a Google Ads conversion.
   // Empty = nothing fires.
@@ -54,6 +56,7 @@
     try { seen = sessionStorage.getItem("fc-booked") === "1"; sessionStorage.setItem("fc-booked", "1"); } catch (e) {}
     // Refreshing the page must not count a second booking.
     if (!seen && BOOKED_SEND_TO && typeof gtag === "function") gtag("event", "conversion", { send_to: BOOKED_SEND_TO });
+    if (!seen) window.fcTrack("Lead", "booked_call");
   })();
 </script>
 </body>
