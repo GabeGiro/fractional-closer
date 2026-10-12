@@ -5,7 +5,7 @@
 var FC_TAGS = {
   ga4: "",        // "G-XXXXXXXXXX"
   metaPixel: "",  // "123456789012345"
-  linkedin: ""    // Insight Tag partner id, "1234567"
+  linkedin: "7341788" // Insight Tag partner id (GabeGiro ad account)
 };
 
 window.fcTrack = function (metaEvent, ga4Event) {
