@@ -33,6 +33,11 @@ jobs:
           grep -q 'BOOKED_SEND_TO = "AW-' thanks.html || { echo "Booked-call send_to missing"; exit 1; }
           ! grep -q "@" thanks.html || { echo "No email addresses on thanks.html (Google auto enhanced conversions would scrape it)"; exit 1; }
           test -s gabe.jpg || { echo "Headshot missing"; exit 1; }
+          # Every local script a page loads must exist and be in the deploy list below.
+          for f in $(grep -oh '<script[^>]*src="[^"]*"' index.html privacy.html thanks.html | sed 's/.*src="//; s/"$//' | grep -v '^https\?:' | sort -u); do
+            test -s "$f" || { echo "Script $f is referenced but missing"; exit 1; }
+            grep -q "cp .*[ ]$f[ ]" .github/workflows/deploy.yml || { echo "Script $f is not in the deploy copy list"; exit 1; }
+          done
           ! grep -qi 'most chosen\|lorem ipsum\|TODO' index.html || { echo "Placeholder or unverifiable claim found"; exit 1; }
           python3 - <<'PY'
           from html.parser import HTMLParser
@@ -53,7 +58,7 @@ jobs:
       - name: Collect site files
         run: |
           mkdir _site
-          cp index.html privacy.html thanks.html CNAME gabe.jpg _site/
+          cp index.html privacy.html thanks.html CNAME gabe.jpg tags.js source-capture.js _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
