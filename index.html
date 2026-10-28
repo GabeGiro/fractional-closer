@@ -61,6 +61,9 @@
   .cta { text-align:center; }
   footer { padding:28px 0 40px; color:var(--muted); font-size:14px; border-top:1px solid var(--line); }
   footer a { color:var(--muted); }
+  footer .socials { margin-bottom:8px; }
+  footer .socials a { display:inline-flex; align-items:center; gap:6px; text-decoration:none; }
+  footer .socials a:hover { color:var(--accent); }
   @media (max-width:760px) { .grid3, .fit { grid-template-columns:1fr; } .hero { padding:32px 0 32px; } header .btn.small { display:none; }
     .hero .wrap { grid-template-columns:1fr; gap:20px; } .hero .photo { order:-1; } .headshot { width:120px; height:120px; } }
   .consent { position:fixed; left:16px; right:16px; bottom:16px; max-width:560px; margin:0 auto; background:#111; color:#fff; border-radius:10px; padding:14px 16px; font-size:14px; display:none; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; z-index:10; }
@@ -184,7 +187,9 @@
 </main>
 
 <footer>
-  <div class="wrap">© 2026 Fractional Closer · Gabe Giro · <a href="privacy.html">Privacy</a></div>
+  <div class="wrap">
+    <div class="socials"><a href="https://www.linkedin.com/in/gabegiro/" target="_blank" rel="noopener" aria-label="Gabe Giro on LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg> LinkedIn</a></div>
+    © 2026 Fractional Closer · Gabe Giro · <a href="privacy.html">Privacy</a></div>
 </footer>
 
 <div class="consent" id="consent"><span>We use cookies to see which ads bring visitors who book a call. <a href="privacy.html">Privacy</a></span><span><button class="no" id="c-no">Decline</button> <button class="yes" id="c-yes">Accept</button></span></div>
