@@ -27,7 +27,14 @@
   * { box-sizing:border-box; }
   body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); background:var(--bg); line-height:1.65; font-size:17px; }
   .wrap { max-width:960px; margin:0 auto; padding:0 20px; }
-  header { padding:18px 0; border-bottom:1px solid var(--line); }
+  header { padding:14px 0; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; background:var(--bg); }
+  .video-box { position:relative; max-width:760px; margin:0 auto; aspect-ratio:16/9; border-radius:12px; overflow:hidden; background:#000; }
+  .video-box button { all:unset; cursor:pointer; position:absolute; inset:0; display:block; }
+  .video-box img, .video-box iframe { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border:0; display:block; }
+  .video-box .play { position:absolute; left:50%; top:50%; width:76px; height:76px; margin:-38px 0 0 -38px; border-radius:50%; background:var(--accent); box-shadow:0 4px 18px rgba(0,0,0,.35); transition:transform .15s; }
+  .video-box .play::after { content:""; position:absolute; left:30px; top:22px; border-style:solid; border-width:16px 0 16px 26px; border-color:transparent transparent transparent #fff; }
+  .video-box button:hover .play, .video-box button:focus-visible .play { transform:scale(1.08); }
+  .video-cta { text-align:center; margin-top:28px; }
   header .wrap { display:flex; justify-content:space-between; align-items:center; gap:12px; }
   .logo { font-weight:800; letter-spacing:.2px; }
   .btn { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:13px 22px; border-radius:8px; font-weight:700; }
@@ -71,7 +78,8 @@
   footer .socials a { display:inline-flex; align-items:center; gap:6px; text-decoration:none; }
   footer .socials a:hover { color:var(--accent); }
   @media (max-width:900px) { .grid4 { grid-template-columns:1fr 1fr; } }
-  @media (max-width:760px) { .grid3, .grid4, .fit { grid-template-columns:1fr; } .hero { padding:40px 0 56px; } section { padding:56px 0; } header .btn.small { display:none; }
+  @media (max-width:760px) { .grid3, .grid4, .fit { grid-template-columns:1fr; } .hero { padding:40px 0 56px; } section { padding:56px 0; } header { padding:10px 0; } header .btn.small { padding:8px 12px; font-size:14px; }
+    .video-box .play { width:60px; height:60px; margin:-30px 0 0 -30px; } .video-box .play::after { left:24px; top:17px; border-width:13px 0 13px 21px; }
     .hero .wrap { grid-template-columns:1fr; gap:20px; } .hero .photo { order:-1; } .headshot { width:120px; height:120px; } }
   .consent { position:fixed; left:16px; right:16px; bottom:16px; max-width:560px; margin:0 auto; background:#111; color:#fff; border-radius:10px; padding:14px 16px; font-size:14px; display:none; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; z-index:10; }
   .consent a { color:#fff; }
@@ -101,6 +109,19 @@
       <div class="photo"><img class="headshot" src="gabe.jpg" width="260" height="260" alt="Gabe Giro, fractional closer"></div>
     </div>
   </div>
+
+  <section id="video">
+    <div class="wrap">
+      <h2 style="text-align:center">See how I close for you</h2>
+      <div class="video-box" id="video-box">
+        <button type="button" id="video-play" aria-label="Play video: High ticket closer B2B">
+          <img src="https://i.ytimg.com/vi/fEVg0AnPV4U/maxresdefault.jpg" width="1280" height="720" alt="" loading="lazy">
+          <span class="play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="video-cta"><a class="btn book" href="https://calendly.com/gabegiro/fractional-closer" target="_blank" rel="noopener">Book a call</a></div>
+    </div>
+  </section>
 
   <section class="soft">
     <div class="wrap">
@@ -236,6 +257,16 @@
     document.getElementById("c-yes").onclick = function () { choose("granted"); };
     document.getElementById("c-no").onclick = function () { choose("denied"); };
   })();
+  // Video: YouTube loads only on click (privacy-enhanced domain), then plays.
+  document.getElementById("video-play").addEventListener("click", function () {
+    var f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/fEVg0AnPV4U?autoplay=1&rel=0";
+    f.title = "High ticket closer B2B";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    document.getElementById("video-box").replaceChildren(f);
+    window.fcTrack(null, "video_play");
+  });
   document.querySelectorAll("a.book").forEach(function (a) {
     a.addEventListener("click", function () {
       if (ADS_SEND_TO && typeof gtag === "function") gtag("event", "conversion", { send_to: ADS_SEND_TO });
