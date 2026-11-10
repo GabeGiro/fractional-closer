@@ -3,13 +3,20 @@
 // Meta and LinkedIn load only after Accept. Empty id = tag not loaded.
 // Never pass personal data (no advanced matching): thanks.html must stay email-free.
 var FC_TAGS = {
-  ga4: "",        // "G-XXXXXXXXXX"
+  ga4: "G-5EH71M255C",
   metaPixel: "",  // "123456789012345"
   linkedin: "7341788" // Insight Tag partner id (GabeGiro ad account)
 };
 
 window.fcTrack = function (metaEvent, ga4Event) {
-  if (ga4Event && FC_TAGS.ga4 && typeof gtag === "function") gtag("event", ga4Event, { source: ((window.fcSource || {}).last || {}).utm_source || "direct" });
+  // Send which ad the visit came from, so GA4 shows the funnel per ad (utm_content).
+  var last = (window.fcSource || {}).last || {};
+  if (ga4Event && FC_TAGS.ga4 && typeof gtag === "function") gtag("event", ga4Event, {
+    source: last.utm_source || "direct",
+    campaign: last.utm_campaign || "",
+    ad: last.utm_content || "",
+    audience: last.utm_term || ""
+  });
   if (metaEvent && typeof fbq === "function") fbq("track", metaEvent);
 };
 
