@@ -3,7 +3,8 @@
 (function (root) {
   function calc(s) {
     var attended = s.calls * s.show;
-    var closed = attended * s.close;
+    var qualified = attended * (s.qual == null ? 1 : s.qual);
+    var closed = qualified * s.close;
     var share = s.monthlyOn ? s.share : 0;
     var oneOff = closed * (1 - share);
     var newMonthly = closed * share;
@@ -32,7 +33,7 @@
 
     function sum(k) { return months.reduce(function (t, x) { return t + x[k]; }, 0); }
     return {
-      attended: attended, closed: closed, oneOff: oneOff, newMonthly: newMonthly,
+      attended: attended, qualified: qualified, closed: closed, oneOff: oneOff, newMonthly: newMonthly,
       fee: fee, waived: waived, months: months,
       total: { closer: sum("closer"), revenue: sum("revenue"), gross: sum("gross"), net: sum("net") }
     };
